@@ -1,7 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage ('code quality') {
+        stage ('code analysis') {
+                    tools {
+                        jdk 'JDK-11'
+                    }
                     steps {
                         bat './gradlew sonar'
                     }
