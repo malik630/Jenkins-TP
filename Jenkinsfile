@@ -3,14 +3,14 @@ pipeline {
     stages {
         stage ('build') {
             steps {
-                bat './gradlew build'
+                bat './gradlew'
                 archiveArtifacts 'build/libs/*.jar'
             }
         }
         stage ('code quality') {
             steps {
                 bat './gradlew sonar'
-                archiveArtifacts 'build/libs/*.jar'
+                archiveArtifacts 'sonar/libs/*.jar'
             }
         }
     }
