@@ -1,0 +1,3 @@
+Subject: Déploiement terminé
+
+Le déploiement a été effectué avec succès !
