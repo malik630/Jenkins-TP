@@ -16,11 +16,11 @@ repositories {
 publishing {
     repositories {
         maven {
-            url System.getenv("MAVEN_REPO_URL") ?: "https://mymavenrepo.com/repo/cEmjfkxugPlzLxXg1A2B/"
+            url project.hasProperty('mavenRepoUrl') ? mavenRepoUrl : "https://mymavenrepo.com/repo/cEmjfkxugPlzLxXg1A2B/"
 
             credentials {
-                username System.getenv("MAVEN_USER") ?: "defaultUser"
-                password System.getenv("MAVEN_PASS") ?: "defaultPass"
+                username project.hasProperty('mavenUser') ? mavenUser : "defaultUser"
+                password project.hasProperty('mavenPass') ? mavenPass : "defaultPass"
             }
         }
     }
@@ -37,9 +37,9 @@ publishing {
         println "Envoi de la notification Slack..."
     }
 
-    def webhookUrl = System.getenv("SLACK_WEBHOOK")
+    def webhookUrl = project.hasProperty('slackWebhook') ? slackWebhook : null
     if (webhookUrl == null) {
-        throw new GradleException("Variable d'environnement SLACK_WEBHOOK non définie !")
+        throw new GradleException("Variable slackWebhook non définie dans gradle.properties !")
     }
 
     commandLine 'curl', '-X', 'POST',
@@ -51,22 +51,21 @@ publishing {
 publish.finalizedBy notifySlack
 
 task notifyMail(type: Exec) {
-    def gmailUser = System.getenv("GMAIL_USER")
-    def gmailPass = System.getenv("GMAIL_PASS")
-    if (gmailUser == null || gmailPass == null) {
-        throw new GradleException("Variables GMAIL_USER et GMAIL_PASS doivent être définies !")
+    def gmailUserProp = project.hasProperty('gmailUser') ? gmailUser : null
+    def gmailPassProp = project.hasProperty('gmailPass') ? gmailPass : null
+
+    if (gmailUserProp == null || gmailPassProp == null) {
+        throw new GradleException("Variables gmailUser et gmailPass doivent être définies dans gradle.properties !")
     }
 
     commandLine 'curl',
             '--url', 'smtps://smtp.gmail.com:465',
             '--ssl-reqd',
-            '--mail-from', gmailUser,
+            '--mail-from', gmailUserProp,
             '--mail-rcpt', 'mellitimalik81@gmail.com',
-            '--user', "${gmailUser}:${gmailPass}",
+            '--user', "${gmailUserProp}:${gmailPassProp}",
             '-T', 'mail.txt'
 }
-
-
 
 publish.finalizedBy notifyMail*/
 
@@ -81,12 +80,12 @@ jacocoTestReport.dependsOn jacocoTestCoverageVerification
 
 sonar {
     properties {
-        property "sonar.projectKey", "TP5_Melliti"
-        property "sonar.projectName", "TP5_Melliti"
+        property "sonar.projectKey", "TP7"
+        property "sonar.projectName", "TP7"
         property "sonar.junit.reportsPath", "$buildDir/test-results/test"
         property "sonar.jacoco.reportPaths", "$buildDir/jacoco/test.exec"
         property "sonar.host.url", "http://localhost:9000"
-        property "sonar.login", System.getenv("SONAR_TOKEN") ?: "defaultToken"
+        property "sonar.token", project.hasProperty('sonarToken') ? sonarToken : ""
     }
 }
 

@@ -4,7 +4,6 @@ pipeline {
         stage ('code quality') {
                     steps {
                         bat './gradlew sonar'
-                        archiveArtifacts 'sonar/libs/*.jar'
                     }
         }
         stage ('build') {

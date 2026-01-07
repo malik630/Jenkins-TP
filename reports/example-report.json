@@ -11,6 +11,7 @@
         "steps": [
           {
             "result": {
+              "duration": 5999200,
               "status": "passed"
             },
             "line": 3,
@@ -23,7 +24,7 @@
         ]
       },
       {
-        "start_timestamp": "2026-01-07T15:38:08.668Z",
+        "start_timestamp": "2026-01-07T22:02:26.626Z",
         "line": 5,
         "name": "Determinant",
         "description": "",
@@ -33,7 +34,7 @@
         "steps": [
           {
             "result": {
-              "duration": 17256400,
+              "duration": 4001500,
               "status": "passed"
             },
             "line": 6,
@@ -75,7 +76,7 @@
           },
           {
             "result": {
-              "duration": 13312700,
+              "duration": 2998900,
               "status": "passed"
             },
             "line": 11,
@@ -114,7 +115,7 @@
         ]
       },
       {
-        "start_timestamp": "2026-01-07T15:38:08.903Z",
+        "start_timestamp": "2026-01-07T22:02:26.758Z",
         "line": 14,
         "name": "Transpose",
         "description": "",
@@ -161,6 +162,7 @@
           },
           {
             "result": {
+              "duration": 3001700,
               "status": "passed"
             },
             "line": 20,
@@ -204,6 +206,7 @@
         "steps": [
           {
             "result": {
+              "duration": 999200,
               "status": "passed"
             },
             "line": 3,
@@ -216,7 +219,7 @@
         ]
       },
       {
-        "start_timestamp": "2026-01-07T15:38:08.903Z",
+        "start_timestamp": "2026-01-07T22:02:26.765Z",
         "line": 26,
         "name": "Inverse",
         "description": "",
@@ -309,7 +312,7 @@
         ]
       },
       {
-        "start_timestamp": "2026-01-07T15:38:08.914Z",
+        "start_timestamp": "2026-01-07T22:02:26.769Z",
         "line": 37,
         "name": "Cofactor",
         "description": "",
@@ -350,7 +353,6 @@
           },
           {
             "result": {
-              "duration": 1852800,
               "status": "passed"
             },
             "line": 42,
