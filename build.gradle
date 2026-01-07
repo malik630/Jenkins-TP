@@ -3,7 +3,7 @@ plugins {
     id 'jacoco'
     id "com.github.spacialcircumstances.gradle-cucumber-reporting" version "0.1.25"
     id "org.sonarqube" version "6.0.1.5171"
-    id 'maven-publish'
+    //id 'maven-publish'
 }
 
 group = 'com.example'
@@ -13,7 +13,7 @@ repositories {
     mavenCentral()
 }
 
-publishing {
+/*publishing {
     repositories {
         maven {
             url System.getenv("MAVEN_REPO_URL") ?: "https://mymavenrepo.com/repo/cEmjfkxugPlzLxXg1A2B/"
@@ -30,9 +30,9 @@ publishing {
             from components.java
         }
     }
-}
+}*/
 
-task notifySlack(type: Exec) {
+/*task notifySlack(type: Exec) {
     doFirst {
         println "Envoi de la notification Slack..."
     }
@@ -68,7 +68,7 @@ task notifyMail(type: Exec) {
 
 
 
-publish.finalizedBy notifyMail
+publish.finalizedBy notifyMail*/
 
 cucumberReports {
     outputDir = file('build/reports/cucumber')
