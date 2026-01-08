@@ -16,7 +16,7 @@ repositories {
 publishing {
     repositories {
         maven {
-            url project.hasProperty('mavenRepoUrl') ? mavenRepoUrl : "https://mymavenrepo.com/repo/cEmjfkxugPlzLxXg1A2B/"
+            url = uri(project.hasProperty('mavenRepoUrl')) ? mavenRepoUrl : "https://mymavenrepo.com/repo/cEmjfkxugPlzLxXg1A2B/"
 
             credentials {
                 username project.hasProperty('mavenUser') ? mavenUser : "defaultUser"
