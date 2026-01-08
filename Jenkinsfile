@@ -4,7 +4,7 @@ pipeline {
         stage ('test') {
             steps{
                 bat './gradlew  test'
-                archiveArtifacts 'test/libs/*.jar'
+                archiveArtifacts 'test/reports/tests/test/index.html'
                 bat './gradlew generateCucumberReports'
             }
         }
