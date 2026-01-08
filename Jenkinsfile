@@ -35,13 +35,13 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonar') {
-                        bat """
-                            ./gradlew sonar \
-                            -Dsonar.projectKey=TP7 \
-                            -Dsonar.projectName=TP7 \
-                            -Dsonar.host.url=http://localhost:9000 \
+                        bat '''
+                            ./gradlew sonar ^
+                            -Dsonar.projectKey=TP7 ^
+                            -Dsonar.projectName=TP7 ^
+                            -Dsonar.host.url=http://localhost:9000 ^
                             -Dsonar.token=%SONAR_TOKEN%
-                        """
+                        '''
                     }
                 }
             }
@@ -82,12 +82,12 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    bat """
-                                ./gradlew publish \
-                                -PmavenRepoUrl=${MAVEN_REPO_URL} \
-                                -PmavenUser=${MAVEN_USER} \
-                                -PmavenPass=${MAVEN_PASS}
-                    """
+                    bat '''
+                        ./gradlew publish ^
+                        -PmavenRepoUrl=%MAVEN_REPO_URL% ^
+                        -PmavenUser=%MAVEN_USER% ^
+                        -PmavenPass=%MAVEN_PASS%
+                    '''
                     }
                 }
             }
@@ -117,12 +117,12 @@ pipeline {
                             from: "${GMAIL_USER}"
                         )
                         echo "Envoi de la notification Slack..."
-                        bat """
-                            curl -X POST \
-                            -H 'Content-type: application/json' \
-                            --data '{"text":"Deployment réussi! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' \
+                        bat '''
+                            curl -X POST ^
+                            -H 'Content-type: application/json' ^
+                            --data '{"text":"Deployment réussi! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' ^
                             ${SLACK_WEBHOOK}
-                        """
+                        '''
                         echo "Notifications envoyées avec succès!"
                     }
                 }
@@ -155,12 +155,12 @@ pipeline {
                     from: "${GMAIL_USER}"
                 )
 
-                bat """
-                    curl -X POST \
-                    -H 'Content-type: application/json' \
-                    --data '{"text":"Pipeline échoué! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' \
+                bat '''
+                    curl -X POST ^
+                    -H 'Content-type: application/json' ^
+                    --data '{"text":"Pipeline échoué! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' ^
                     ${SLACK_WEBHOOK}
-                """
+                '''
             }
         }
 
