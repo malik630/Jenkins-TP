@@ -32,7 +32,7 @@ pipeline {
             }
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('sonar') {
                                             bat """
                                                 ./gradlew sonar \
                                                 -Dsonar.projectKey=TP7 \
