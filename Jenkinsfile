@@ -74,7 +74,7 @@ pipeline {
                     bat './gradlew build'
                     bat './gradlew javadoc'
                     archiveArtifacts 'build/libs/*.jar'
-                    archiveArtifacts artifacts: '/build/docs/**/*'
+                    archiveArtifacts artifacts: 'build/docs/**/*'
                 }
             }
         }
@@ -114,14 +114,14 @@ pipeline {
                             """,
                             mimeType: 'text/html',
                             to: 'mellitimalik81@gmail.com',
-                            from: "${GMAIL_USER}"
+                            from: "%GMAIL_USER%"
                         )
                         echo "Envoi de la notification Slack..."
                         bat '''
                             curl -X POST ^
                             -H 'Content-type: application/json' ^
                             --data '{"text":"Deployment réussi! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' ^
-                            ${SLACK_WEBHOOK}
+                            %SLACK_WEBHOOK%
                         '''
                         echo "Notifications envoyées avec succès!"
                     }
@@ -152,14 +152,14 @@ pipeline {
                     """,
                     mimeType: 'text/html',
                     to: 'mellitimalik81@gmail.com',
-                    from: "${GMAIL_USER}"
+                    from: "%GMAIL_USER%"
                 )
 
                 bat '''
                     curl -X POST ^
                     -H 'Content-type: application/json' ^
                     --data '{"text":"Pipeline échoué! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' ^
-                    ${SLACK_WEBHOOK}
+                    %SLACK_WEBHOOK%
                 '''
             }
         }
