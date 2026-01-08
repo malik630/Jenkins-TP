@@ -76,7 +76,7 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    bat './gradlew publish -PmavenRepoUrl=%MAVEN_REPO_URL% -PmavenUser=%MAVEN_USER% -PmavenPass=%MAVEN_PASS%'
+                    bat './gradlew publish'
                     }
                 }
             }
