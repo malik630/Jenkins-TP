@@ -108,6 +108,7 @@ pipeline {
                         echo "Envoi de la notification Slack..."
                         bat "curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Deployment réussi! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}\\"}" ${SLACK_WEBHOOK}"
                         echo "Notifications envoyées avec succès!"
+                        }
                     }
                 }
             }
