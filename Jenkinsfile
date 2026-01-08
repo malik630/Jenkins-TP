@@ -108,7 +108,6 @@ pipeline {
                         echo "Envoi de la notification Slack..."
                         bat 'curl -X POST -H "Content-type: application/json" --data @slack-message.json ' + SLACK_WEBHOOK
                         echo "Notifications envoyées avec succès!"
-                        }
                     }
                 }
             }
