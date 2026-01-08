@@ -18,6 +18,22 @@ pipeline {
                 bat './gradlew sonar'
             }
         }
+        stage('Code Quality') {
+            steps {
+                script {
+                    echo "code quality"
+                    echo "Vérification du Quality Gate..."
+
+                    timeout(time: 5, unit: 'MINUTES') {
+                        def qaulityGate = waitForQualityGate()
+                        if (qualityGate.status != 'OK') {
+                            error "Le Quality Gate a échoué: ${qualityGate.status}"
+                        }
+                        echo "Quality Gate validé avec succès!"
+                    }
+                }
+            }
+        }
         stage ('build') {
             steps {
                 bat './gradlew build'
