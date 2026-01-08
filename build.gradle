@@ -18,6 +18,11 @@ publishing {
         maven {
             url = System.getenv('MAVEN_REPO_URL')
 
+            println "========================================="
+            println "MAVEN_REPO_URL from env: ${System.getenv('MAVEN_REPO_URL')}"
+            println "Final URL used: ${repoUrl}"
+            println "========================================="
+
             credentials {
                 username project.hasProperty('mavenUser') ? mavenUser : "defaultUser"
                 password project.hasProperty('mavenPass') ? mavenPass : "defaultPass"
