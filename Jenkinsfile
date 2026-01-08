@@ -3,9 +3,11 @@ pipeline {
     stages {
         stage ('test') {
             steps{
-                bat './gradlew  test'
-                archiveArtifacts 'build/reports/tests/test/index.html'
-                bat './gradlew generateCucumberReports'
+                bat './gradlew  test jacocoTestReport'
+                junit 'build/test-results/test/*.xml'
+                cucumber buildStatus: 'UNSTABLE',
+                                    fileIncludePattern: '**/*.json',
+                                    jsonReportDirectory: 'build/reports/cucumber'
             }
         }
         stage ('code analysis') {
