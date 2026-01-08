@@ -19,9 +19,6 @@ pipeline {
         stage ('test') {
             steps{
                 script{
-                    bat 'echo MAVEN_REPO_URL=%MAVEN_REPO_URL%'
-                    bat 'echo MAVEN_USER=%MAVEN_USER%'
-                    bat 'echo MAVEN_PASS=%MAVEN_PASS%'
                     bat './gradlew  test jacocoTestReport'
                     junit 'build/test-results/test/*.xml'
                     cucumber buildStatus: 'UNSTABLE',
