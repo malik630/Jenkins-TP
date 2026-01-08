@@ -129,49 +129,48 @@ pipeline {
             }
         }
 
-        post {
-            failure {
-                script {
-                        echo "Pipeline échoué - Envoi des notifications d'échec"
-                        emailext(
-                            subject: "Pipeline échoué: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                            body: """
-                                <html>
-                                <body>
-                                    <h2 style="color: red;">Pipeline échoué!</h2>
-                                    <p><strong>Projet:</strong> ${env.JOB_NAME}</p>
-                                    <p><strong>Build:</strong> #${env.BUILD_NUMBER}</p>
-                                    <p><strong>Branche:</strong> ${env.BRANCH_NAME}</p>
-                                    <p><strong>Statut:</strong> FAILED</p>
-                                    <p><strong>Durée:</strong> ${currentBuild.durationString}</p>
-                                    <hr>
-                                    <p>Une erreur s'est produite lors de l'exécution du pipeline.</p>
-                                    <p><a href="${env.BUILD_URL}console">Voir les logs du build</a></p>
-                                </body>
-                                </html>
-                            """,
-                            mimeType: 'text/html',
-                            to: 'mellitimalik81@gmail.com',
-                            from: "${GMAIL_USER}"
-                        )
+    post {
+        failure {
+            script {
+                echo "Pipeline échoué - Envoi des notifications d'échec"
+                emailext(
+                    subject: "Pipeline échoué: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+                    body: """
+                        <html>
+                             <body>
+                                <h2 style="color: red;">Pipeline échoué!</h2>
+                                <p><strong>Projet:</strong> ${env.JOB_NAME}</p>
+                                <p><strong>Build:</strong> #${env.BUILD_NUMBER}</p>
+                                <p><strong>Branche:</strong> ${env.BRANCH_NAME}</p>
+                                <p><strong>Statut:</strong> FAILED</p>
+                                <p><strong>Durée:</strong> ${currentBuild.durationString}</p>
+                                <hr>
+                                <p>Une erreur s'est produite lors de l'exécution du pipeline.</p>
+                                <p><a href="${env.BUILD_URL}console">Voir les logs du build</a></p>
+                             </body>
+                        </html>
+                    """,
+                    mimeType: 'text/html',
+                    to: 'mellitimalik81@gmail.com',
+                    from: "${GMAIL_USER}"
+                )
 
-                        bat """
-                            curl -X POST \
-                            -H 'Content-type: application/json' \
-                            --data '{"text":"Pipeline échoué! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' \
-                            ${SLACK_WEBHOOK}
-                        """
-                }
+                bat """
+                    curl -X POST \
+                    -H 'Content-type: application/json' \
+                    --data '{"text":"Pipeline échoué! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - Branche: ${env.BRANCH_NAME}"}' \
+                    ${SLACK_WEBHOOK}
+                """
             }
+        }
 
-            success {
-                    echo "Pipeline terminé avec succès!"
-            }
+        success {
+            echo "Pipeline terminé avec succès!"
+        }
 
-            always {
-                echo "Nettoyage de l'espace de travail..."
-                cleanWs()
-            }
+        always {
+            echo "Nettoyage de l'espace de travail..."
+            cleanWs()
         }
     }
 }
