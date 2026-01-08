@@ -38,7 +38,7 @@ pipeline {
                                                 -Dsonar.projectKey=TP7 \
                                                 -Dsonar.projectName=TP7 \
                                                 -Dsonar.host.url=http://localhost:9000 \
-                                                -Dsonar.token=${SONAR_TOKEN}
+                                                -Dsonar.token=%SONAR_TOKEN%
                                             """
                                         }
                 }
@@ -51,9 +51,9 @@ pipeline {
                     echo "Vérification du Quality Gate..."
 
                     timeout(time: 5, unit: 'MINUTES') {
-                        def qaulityGate = waitForQualityGate()
-                        if (qualityGate.status != 'OK') {
-                            error "Le Quality Gate a échoué: ${qualityGate.status}"
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Le Quality Gate a échoué: ${qg.status}"
                         }
                         echo "Quality Gate validé avec succès!"
                     }
