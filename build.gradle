@@ -20,7 +20,7 @@ publishing {
 
             println "========================================="
             println "MAVEN_REPO_URL from env: ${System.getenv('MAVEN_REPO_URL')}"
-            println "Final URL used: ${repoUrl}"
+            println "Final URL used: ${url}"
             println "========================================="
 
             credentials {
