@@ -80,6 +80,7 @@ pipeline {
                     }
                 }
             }
+        }
 
         /*stage('notification') {
             steps {
