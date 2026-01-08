@@ -77,7 +77,6 @@ pipeline {
             steps {
                 script {
                     bat './gradlew publish'
-                    }
                 }
             }
         }
@@ -111,8 +110,8 @@ pipeline {
                     echo "Notifications envoyées avec succès!"
                 }
             }
-        }
-    }*/
+        }*/
+    }
 
     post {
         failure {
