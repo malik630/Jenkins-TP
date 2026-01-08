@@ -69,11 +69,11 @@ task notifyMail(type: Exec) {
 
 publish.finalizedBy notifyMail*/
 
-cucumberReports {
+/*cucumberReports {
     outputDir = file('build/reports/cucumber')
     buildId = '0'
     reports = files('reports/example-report.json')
-}
+}*/
 
 jacocoTestCoverageVerification.dependsOn test
 jacocoTestReport.dependsOn jacocoTestCoverageVerification
