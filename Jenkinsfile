@@ -106,7 +106,7 @@ pipeline {
                             from: "%GMAIL_USER%"
                         )
                         echo "Envoi de la notification Slack..."
-                        bat "curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Deployment réussi! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}\\"}" ${SLACK_WEBHOOK}"
+                        bat 'curl -X POST -H "Content-type: application/json" --data @slack-message.json ' + SLACK_WEBHOOK
                         echo "Notifications envoyées avec succès!"
                         }
                     }
@@ -140,7 +140,7 @@ pipeline {
                     from: "%GMAIL_USER%"
                 )
 
-                bat "curl -X POST -H \"Content-type: application/json\" --data \"{\\"text\\":\\"Pipeline échoué! Projet: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}\\"}\" ${SLACK_WEBHOOK}"
+                bat 'curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Pipeline echoue! Projet: ' + env.JOB_NAME + ' - Build #' + env.BUILD_NUMBER + ' - Branche: ' + env.BRANCH_NAME + '\\"}" ' + SLACK_WEBHOOK
             }
         }
 
