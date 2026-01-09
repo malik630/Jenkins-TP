@@ -87,7 +87,7 @@ pipeline {
             }
         }
 
-        /*stage('notification') {
+        stage('notification') {
             steps {
                 script {
                     emailext(
@@ -116,7 +116,7 @@ pipeline {
                     echo "Notifications envoyées avec succès!"
                 }
             }
-        }*/
+        }
     }
 
     post {
