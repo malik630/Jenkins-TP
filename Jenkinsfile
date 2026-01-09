@@ -92,22 +92,8 @@ pipeline {
                 script {
                     emailext(
                         subject: "Pipeline réussi: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                        body: """
-                            <html>
-                                <body>
-                                    <h2>Pipeline exécuté avec succès!</h2>
-                                    <p><strong>Projet:</strong> ${env.JOB_NAME}</p>
-                                    <p><strong>Build:</strong> #${env.BUILD_NUMBER}</p>
-                                    <p><strong>Branche:</strong> ${env.BRANCH_NAME}</p>
-                                    <p><strong>Statut:</strong> SUCCESS </p>
-                                    <p><strong>Durée:</strong> ${currentBuild.durationString}</p>
-                                    <hr>
-                                    <p>Le déploiement a été effectué avec succès sur MyMavenRepo.</p>
-                                    <p><a href="${env.BUILD_URL}">Voir les détails du build</a></p>
-                                </body>
-                            </html>
-                        """,
-                        mimeType: 'text/html',
+                        body: readFile('mail.txt'),
+                        mimeType: 'text/plain',
                         to: 'mellitimalik81@gmail.com',
                         from: 'ma_melliti@esi.dz'
                     )

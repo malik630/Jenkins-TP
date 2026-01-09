@@ -38,9 +38,6 @@ publishing {
     }
 
     def webhookUrl = project.hasProperty('slackWebhook') ? slackWebhook : null
-    if (webhookUrl == null) {
-        throw new GradleException("Variable slackWebhook non définie dans gradle.properties !")
-    }
 
     commandLine 'curl', '-X', 'POST',
             '-H', 'Content-type: application/json',
@@ -53,10 +50,6 @@ publish.finalizedBy notifySlack
 task notifyMail(type: Exec) {
     def gmailUserProp = project.hasProperty('gmailUser') ? gmailUser : null
     def gmailPassProp = project.hasProperty('gmailPass') ? gmailPass : null
-
-    if (gmailUserProp == null || gmailPassProp == null) {
-        throw new GradleException("Variables gmailUser et gmailPass doivent être définies dans gradle.properties !")
-    }
 
     commandLine 'curl',
             '--url', 'smtps://smtp.gmail.com:465',
