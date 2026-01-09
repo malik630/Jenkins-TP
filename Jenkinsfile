@@ -109,7 +109,7 @@ pipeline {
                         """,
                         mimeType: 'text/html',
                         to: 'mellitimalik81@gmail.com',
-                        from: "${GMAIL_USER}"
+                        from: 'ma_melliti@esi.dz'
                     )
                     echo "Envoi de la notification Slack..."
                     bat 'curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Pipeline reussi! Projet: ' + env.JOB_NAME + ' - Build #' + env.BUILD_NUMBER + ' - Branche: ' + env.BRANCH_NAME + '\\"}" ' + SLACK_WEBHOOK
