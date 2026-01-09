@@ -93,17 +93,17 @@ pipeline {
                     mail to: 'mellitimalik81@gmail.com',
                          subject: "Pipeline réussi: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                          body: """
-                                Pipeline exécuté avec succès!
+Pipeline exécuté avec succès!
 
-                                Projet: ${env.JOB_NAME}
-                                Build: #${env.BUILD_NUMBER}
-                                Branche: ${env.BRANCH_NAME}
-                                Statut: SUCCESS
-                                Durée: ${currentBuild.durationString}
+Projet: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Branche: ${env.BRANCH_NAME}
+Statut: SUCCESS
+Durée: ${currentBuild.durationString}
 
-                                Le déploiement a été effectué avec succès sur MyMavenRepo.
+Le déploiement a été effectué avec succès sur MyMavenRepo.
 
-                                Voir les détails du build: ${env.BUILD_URL}
+Voir les détails du build: ${env.BUILD_URL}
                          """
 
                     echo "Envoi de la notification Slack..."
@@ -121,17 +121,17 @@ pipeline {
                 mail to: 'mellitimalik81@gmail.com',
                      subject: "Pipeline échoué: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                      body: """
-                            Pipeline échoué!
+Pipeline échoué!
 
-                            Projet: ${env.JOB_NAME}
-                            Build: #${env.BUILD_NUMBER}
-                            Branche: ${env.BRANCH_NAME}
-                            Statut: FAILED
-                            Durée: ${currentBuild.durationString}
+Projet: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Branche: ${env.BRANCH_NAME}
+Statut: FAILED
+Durée: ${currentBuild.durationString}
 
-                            Une erreur s'est produite lors de l'exécution du pipeline.
+Une erreur s'est produite lors de l'exécution du pipeline.
 
-                            Voir les logs du build: ${env.BUILD_URL}console
+Voir les logs du build: ${env.BUILD_URL}console
                      """
 
                 bat 'curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Pipeline echoue! Projet: ' + env.JOB_NAME + ' - Build #' + env.BUILD_NUMBER + ' - Branche: ' + env.BRANCH_NAME + '\\"}" ' + SLACK_WEBHOOK
