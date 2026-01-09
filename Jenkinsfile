@@ -115,7 +115,6 @@ Voir les détails du build: ${env.BUILD_URL}
             }
         }
     }
-    }
 
     post {
         failure {
