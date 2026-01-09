@@ -21,6 +21,16 @@ publishing {
             println "========================================="
             println "MAVEN_REPO_URL from env: ${System.getenv('MAVEN_REPO_URL')}"
             println "Final URL used: ${url}"
+            println "MAVEN_USER exists: ${user != null}"
+            println "MAVEN_USER length: ${user?.length()}"
+            println "MAVEN_PASS exists: ${pass != null}"
+            println "MAVEN_PASS length: ${pass?.length()}"
+            println "All MAVEN env vars:"
+            System.getenv().each { key, value ->
+                if (key.startsWith('MAVEN')) {
+                    println "  ${key} = ${value?.take(3)}... (length: ${value?.length()})"
+                }
+            }
             println "========================================="
 
             credentials {
