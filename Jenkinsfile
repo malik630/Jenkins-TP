@@ -75,6 +75,11 @@ pipeline {
 
         stage('deploy') {
             steps {
+                withCredentials([
+                    string(credentialsId: 'MAVEN_REPO_URL', variable: 'MAVEN_REPO_URL'),
+                    string(credentialsId: 'MAVEN_USER', variable: 'MAVEN_USER'),
+                    string(credentialsId: 'MAVEN_PASS', variable: 'MAVEN_PASS')
+                ])
                 script {
                     bat './gradlew publish'
                 }
