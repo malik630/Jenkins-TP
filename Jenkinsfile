@@ -23,7 +23,7 @@ pipeline {
                     junit 'build/test-results/test/*.xml'
                     cucumber buildStatus: 'UNSTABLE',
                              fileIncludePattern: '**/*.json',
-                             jsonReportDirectory: 'build/reports/cucumber'
+                             jsonReportDirectory: 'reports'
                 }
             }
         }
