@@ -90,19 +90,31 @@ pipeline {
         stage('notification') {
             steps {
                 script {
-                    emailext(
-                        subject: "Pipeline réussi: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                        body: readFile('mail.txt'),
-                        mimeType: 'text/plain',
-                        to: 'mellitimalik81@gmail.com',
-                        from: 'ma_melliti@esi.dz'
-                    )
+                    // Notification par email (méthode simple)
+                    mail to: 'mellitimalik81@gmail.com',
+                         subject: "Pipeline réussi: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+                         body: """
+Pipeline exécuté avec succès!
+
+Projet: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Branche: ${env.BRANCH_NAME}
+Statut: SUCCESS
+Durée: ${currentBuild.durationString}
+
+Le déploiement a été effectué avec succès sur MyMavenRepo.
+
+Voir les détails du build: ${env.BUILD_URL}
+                         """
+
+                    // Notification Slack
                     echo "Envoi de la notification Slack..."
                     bat 'curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Pipeline reussi! Projet: ' + env.JOB_NAME + ' - Build #' + env.BUILD_NUMBER + ' - Branche: ' + env.BRANCH_NAME + '\\"}" ' + SLACK_WEBHOOK
                     echo "Notifications envoyées avec succès!"
                 }
             }
         }
+    }
     }
 
     post {
