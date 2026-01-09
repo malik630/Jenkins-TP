@@ -112,7 +112,7 @@ pipeline {
                         from: "%GMAIL_USER%"
                     )
                     echo "Envoi de la notification Slack..."
-                    bat 'curl -X POST -H "Content-type: application/json" --data @slack-message.json %SLACK_WEBHOOK%'
+                    bat 'curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Pipeline réussi! Projet: ' + env.JOB_NAME + ' - Build #' + env.BUILD_NUMBER + ' - Branche: ' + env.BRANCH_NAME + '\\"}" ' + SLACK_WEBHOOK
                     echo "Notifications envoyées avec succès!"
                 }
             }
