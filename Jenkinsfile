@@ -41,7 +41,7 @@ pipeline {
             }
         }
 
-        /*stage('Code Quality') {
+        stage('Code Quality') {
             steps {
                 script {
                     echo "code quality"
@@ -56,7 +56,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
 
         stage ('build') {
             tools {
@@ -90,24 +90,22 @@ pipeline {
         stage('notification') {
             steps {
                 script {
-                    // Notification par email (méthode simple)
                     mail to: 'mellitimalik81@gmail.com',
                          subject: "Pipeline réussi: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                          body: """
-Pipeline exécuté avec succès!
+                                Pipeline exécuté avec succès!
 
-Projet: ${env.JOB_NAME}
-Build: #${env.BUILD_NUMBER}
-Branche: ${env.BRANCH_NAME}
-Statut: SUCCESS
-Durée: ${currentBuild.durationString}
+                                Projet: ${env.JOB_NAME}
+                                Build: #${env.BUILD_NUMBER}
+                                Branche: ${env.BRANCH_NAME}
+                                Statut: SUCCESS
+                                Durée: ${currentBuild.durationString}
 
-Le déploiement a été effectué avec succès sur MyMavenRepo.
+                                Le déploiement a été effectué avec succès sur MyMavenRepo.
 
-Voir les détails du build: ${env.BUILD_URL}
+                                Voir les détails du build: ${env.BUILD_URL}
                          """
 
-                    // Notification Slack
                     echo "Envoi de la notification Slack..."
                     bat 'curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Pipeline reussi! Projet: ' + env.JOB_NAME + ' - Build #' + env.BUILD_NUMBER + ' - Branche: ' + env.BRANCH_NAME + '\\"}" ' + SLACK_WEBHOOK
                     echo "Notifications envoyées avec succès!"
@@ -120,27 +118,21 @@ Voir les détails du build: ${env.BUILD_URL}
         failure {
             script {
                 echo "Pipeline échoué - Envoi des notifications d'échec"
-                emailext(
-                    subject: "Pipeline échoué: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                    body: """
-                        <html>
-                             <body>
-                                <h2 style="color: red;">Pipeline échoué!</h2>
-                                <p><strong>Projet:</strong> ${env.JOB_NAME}</p>
-                                <p><strong>Build:</strong> #${env.BUILD_NUMBER}</p>
-                                <p><strong>Branche:</strong> ${env.BRANCH_NAME}</p>
-                                <p><strong>Statut:</strong> FAILED</p>
-                                <p><strong>Durée:</strong> ${currentBuild.durationString}</p>
-                                <hr>
-                                <p>Une erreur s'est produite lors de l'exécution du pipeline.</p>
-                                <p><a href="${env.BUILD_URL}console">Voir les logs du build</a></p>
-                             </body>
-                        </html>
-                    """,
-                    mimeType: 'text/html',
-                    to: 'mellitimalik81@gmail.com',
-                    from: "${GMAIL_USER}"
-                )
+                mail to: 'mellitimalik81@gmail.com',
+                     subject: "Pipeline échoué: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+                     body: """
+                            Pipeline échoué!
+
+                            Projet: ${env.JOB_NAME}
+                            Build: #${env.BUILD_NUMBER}
+                            Branche: ${env.BRANCH_NAME}
+                            Statut: FAILED
+                            Durée: ${currentBuild.durationString}
+
+                            Une erreur s'est produite lors de l'exécution du pipeline.
+
+                            Voir les logs du build: ${env.BUILD_URL}console
+                     """
 
                 bat 'curl -X POST -H "Content-type: application/json" --data "{\\"text\\":\\"Pipeline echoue! Projet: ' + env.JOB_NAME + ' - Build #' + env.BUILD_NUMBER + ' - Branche: ' + env.BRANCH_NAME + '\\"}" ' + SLACK_WEBHOOK
             }
