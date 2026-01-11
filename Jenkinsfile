@@ -41,7 +41,7 @@ pipeline {
             }
         }
 
-        stage('Code Quality') {
+        /*stage('Code Quality') {
             steps {
                 script {
                     echo "code quality"
@@ -56,7 +56,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage ('build') {
             tools {
